@@ -2,9 +2,12 @@
 % Please edit documentation in R/package.R
 \name{xrprof}
 \alias{xrprof}
+\alias{enable_no_sudo}
 \title{Profile an External R Program}
 \usage{
 xrprof(file, pid = Sys.getpid(), frequency = 1, duration = 3600)
+
+enable_no_sudo()
 }
 \arguments{
 \item{file}{The file to write the samples to. See \code{\link[utils]{Rprof}}.}
