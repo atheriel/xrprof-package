@@ -34,9 +34,13 @@ xrprof <- function(file, pid = Sys.getpid(), frequency = 1, duration = 3600) {
 }
 
 xrprof_bin <- function() {
-  if (nchar(Sys.which("xrprof")) != 0) {
-    Sys.which("xrprof")
+  sys <- Sys.which("xrprof")
+  vendored <- system.file("vendor", "xrprof", package = "xrprof")
+  if (nchar(sys) != 0) {
+    sys
+  } else if (file.exists(vendored)) {
+    vendored
   } else {
-    stop("xrprof is not installed.")
+    stop("xrprof is not installed locally and no vendored binary is available.")
   }
 }
