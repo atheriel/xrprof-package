@@ -1,0 +1,13 @@
+Package: xrprof
+Title: An External Sampling Profiler for R
+Version: 0.0.0.9000
+Authors@R:
+  person("Aaron", "Jacobs", role = c("aut", "cre"),
+         email = "atheriel@gmail.com")
+Description: Like Rprof(), but for R code that is already running.
+License: GPL-2
+Imports:
+  processx
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
