@@ -16,9 +16,18 @@ xrprof <- function(file, pid = Sys.getpid(), frequency = 1, duration = 3600) {
     xrprof_bin(), args = c("-F", frequency, "-d", duration, "-p", pid),
     stdout = file, stderr = "|", supervise = TRUE
   )
+  p$wait(1)
 
   if (!p$is_alive()) {
-    p$read_error_lines()
+    raw <- p$read_error_lines()
+    if (length(raw) == 0) {
+      stop("The xprof process failed to start correctly.")
+    } else {
+      stop(
+        "The xprof process failed to start.\n",
+        paste("  ", raw, collapse = "\n")
+      )
+    }
   }
 
   p
