@@ -9,4 +9,5 @@ vendor/xrprof:
 	cd vendor && $(MAKE) xrprof CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS) $(R_HEADERS)" AR="$(AR)" RANLIB="$(RANLIB)"
 
 clean:
+	$(RM) ../inst/vendor/xrprof
 	cd vendor && $(MAKE) clean
