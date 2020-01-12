@@ -12,10 +12,23 @@
 #'
 #' @export
 xrprof <- function(file, pid = Sys.getpid(), frequency = 1, duration = 3600) {
-  p <- processx::process$new(
-    xrprof_bin(), args = c("-F", frequency, "-d", duration, "-p", pid),
-    stdout = file, stderr = "|", supervise = TRUE
-  )
+  bin <- xrprof_bin()
+
+  if (!needs_sudo(bin)) {
+    p <- processx::process$new(
+      bin, args = c("-F", frequency, "-d", duration, "-p", pid),
+      stdout = file, stderr = "|", supervise = TRUE
+    )
+  } else {
+    pw <- askpass::askpass("A password is required for sudo:")
+    p <- processx::process$new(
+      "sudo", args = c("-S", bin, "-F", frequency, "-d", duration, "-p", pid),
+      stdin = "|", stdout = "|", stderr = "|", supervise = TRUE
+    )
+    p$write_input(pw)
+    p$write_input("\n")
+  }
+
   p$wait(1)
 
   if (!p$is_alive()) {
@@ -42,5 +55,14 @@ xrprof_bin <- function() {
     vendored
   } else {
     stop("xrprof is not installed locally and no vendored binary is available.")
+  }
+}
+
+needs_sudo <- function(bin) {
+  out <- processx::run("getcap", args = bin)
+  if (length(out$stdout) > 0 && grepl("cap_sys_ptrace", out$stdout)) {
+    FALSE
+  } else {
+    TRUE
   }
 }

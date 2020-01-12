@@ -7,6 +7,7 @@ Authors@R:
 Description: Like Rprof(), but for R code that is already running.
 License: GPL-2
 Imports:
+  askpass,
   processx
 Encoding: UTF-8
 LazyData: true
