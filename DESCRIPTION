@@ -6,6 +6,7 @@ Authors@R:
          email = "atheriel@gmail.com")
 Description: Like Rprof(), but for R code that is already running.
 License: GPL-2
+Depends: R (>= 3.5)
 Imports:
   askpass,
   processx

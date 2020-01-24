@@ -1,13 +1,12 @@
-R_HEADERS := `"$(R_HOME)/bin$(R_ARCH_BIN)/R" CMD config --cppflags`
 $(SHLIB): ../inst/vendor/xrprof
 
-../inst/vendor/xrprof: vendor/xrprof
+../inst/vendor/xrprof: vendor/xrprof/xrprof
 	mkdir -p ../inst/vendor
-	cp vendor/xrprof ../inst/vendor/xrprof
+	cp vendor/xrprof/xrprof ../inst/vendor/xrprof
 
-vendor/xrprof:
-	cd vendor && $(MAKE) xrprof CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS) $(R_HEADERS)" AR="$(AR)" RANLIB="$(RANLIB)"
+vendor/xrprof/xrprof:
+	cd vendor/xrprof && $(MAKE) xrprof CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" RANLIB="$(RANLIB)"
 
 clean:
 	$(RM) ../inst/vendor/xrprof
-	cd vendor && $(MAKE) clean
+	cd vendor/xrprof && $(MAKE) clean
