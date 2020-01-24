@@ -1,1 +1,5 @@
 .Rproj.user
+inst
+src/vendor/xrprof/xrprof
+*.o
+*.so
